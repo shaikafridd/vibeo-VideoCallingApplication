@@ -37,6 +37,10 @@ app.get("/", (req, res) => {
 
 const start = async () => {
     app.set("mongo_user")
+    if (!process.env.MONGO_URL) {
+        console.error("CRITICAL ERROR: MONGO_URL environment variable is missing! Please configure it in your Render environment settings.");
+        process.exit(1);
+    }
     try {
         const connectionDb = await mongoose.connect(process.env.MONGO_URL);
         console.log(`MONGO Connected DB HOST: ${connectionDb.connection.host}`);
