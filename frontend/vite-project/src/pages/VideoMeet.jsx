@@ -177,7 +177,6 @@ export default function VideoMeet() {
     const [video, setVideo] = useState(true);
     const [audio, setAudio] = useState(true);
     const [screen, setScreen] = useState(false);
-    const [screenAvailable, setScreenAvailable] = useState(false);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [askForUsername, setAskForUsername] = useState(true);
@@ -359,6 +358,13 @@ export default function VideoMeet() {
     // Check media devices availability on mount
     useEffect(() => {
         const checkPermissions = async () => {
+            if (!navigator.mediaDevices) {
+                console.warn("navigator.mediaDevices is not supported (likely insecure HTTP context)");
+                setVideoAvailable(false);
+                setAudioAvailable(false);
+                return;
+            }
+
             try {
                 const videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
                 setVideoAvailable(true);
@@ -373,12 +379,6 @@ export default function VideoMeet() {
                 audioStream.getTracks().forEach(track => track.stop());
             } catch {
                 setAudioAvailable(false);
-            }
-
-            if (navigator.mediaDevices.getDisplayMedia) {
-                setScreenAvailable(true);
-            } else {
-                setScreenAvailable(false);
             }
         };
 
@@ -788,6 +788,10 @@ export default function VideoMeet() {
 
     // Toggle Screen Share
     const handleScreenShareToggle = async () => {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getDisplayMedia) {
+            alert("Screen sharing is not supported on this browser or device, or requires a secure (HTTPS) connection.");
+            return;
+        }
         if (!screen) {
             try {
                 const displayStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
@@ -1076,12 +1080,10 @@ export default function VideoMeet() {
                             <span className="tooltip">Switch Camera</span>
                         </button>
                         
-                        {screenAvailable && (
-                            <button onClick={handleScreenShareToggle} className={`control-btn ${screen ? "btn-active" : "btn-on"}`}>
-                                {screen ? <MonitorOff size={20} /> : <Monitor size={20} />}
-                                <span className="tooltip">{screen ? "Stop Presenting" : "Present Screen"}</span>
-                            </button>
-                        )}
+                        <button onClick={handleScreenShareToggle} className={`control-btn ${screen ? "btn-active" : "btn-on"}`}>
+                            {screen ? <MonitorOff size={20} /> : <Monitor size={20} />}
+                            <span className="tooltip">{screen ? "Stop Presenting" : "Present Screen"}</span>
+                        </button>
 
                         <button onClick={handleCopyLink} className="control-btn btn-on">
                             {copied ? <Check size={20} color="#86efac" /> : <Copy size={20} />}
