@@ -1,0 +1,29 @@
+# Node modules
+node_modules/
+backend/node_modules/
+frontend/vite-project/node_modules/
+
+# Local env files (credentials)
+.env
+.env.local
+.env.production
+.env.development
+backend/.env
+frontend/vite-project/.env
+frontend/vite-project/.env.local
+
+# Production builds
+dist/
+frontend/vite-project/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Agent files
+.gemini/
+brain/
+scratch/
+walkthrough.md
+task.md
+implementation_plan.md
