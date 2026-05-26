@@ -1,9 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from "react";
+import { BACKEND_URL } from "../utils/config.js";
 
 const AuthContext = createContext(null);
-
-const BACKEND_URL = `http://${window.location.hostname}:8000`;
 
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("token") || "");

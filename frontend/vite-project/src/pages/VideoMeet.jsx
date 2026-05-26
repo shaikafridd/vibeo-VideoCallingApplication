@@ -21,8 +21,9 @@ import {
     Lock
 } from "lucide-react";
 import "../styles/video.css";
+import { BACKEND_URL } from "../utils/config.js";
 
-const server_url = `http://${window.location.hostname}:8000`;
+const server_url = BACKEND_URL;
 
 let connections = {};
 

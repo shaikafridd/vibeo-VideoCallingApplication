@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/Authcontext.jsx";
 import { withAuth } from "../utils/withAuth.jsx";
+import { BACKEND_URL } from "../utils/config.js";
 import { LogOut, Clock, Menu, X } from "lucide-react";
 import "../App.css";
 
 function Home() {
     const { token, logout } = useAuth();
-    const BACKEND_URL = `http://${window.location.hostname}:8000`;
     const [meetingCode, setMeetingCode] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [error, setError] = useState("");

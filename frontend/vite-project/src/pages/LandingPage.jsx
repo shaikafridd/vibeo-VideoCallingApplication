@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../utils/config.js";
 import { Menu, X } from "lucide-react";
 import "../App.css";
 
 export default function LandingPage() {
-    const BACKEND_URL = `http://${window.location.hostname}:8000`;
     const [showGuestModal, setShowGuestModal] = useState(false);
     const [guestRoomId, setGuestRoomId] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

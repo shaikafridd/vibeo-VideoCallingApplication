@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/Authcontext.jsx";
 import { withAuth } from "../utils/withAuth.jsx";
+import { BACKEND_URL } from "../utils/config.js";
 import { ArrowLeft, Clock } from "lucide-react";
 import "../App.css";
 
@@ -14,7 +15,7 @@ function History() {
     useEffect(() => {
         const fetchHistory = async () => {
             try {
-                const response = await fetch(`http://${window.location.hostname}:8000/api/v1/users/get_all_activity`, {
+                const response = await fetch(`${BACKEND_URL}/api/v1/users/get_all_activity`, {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
