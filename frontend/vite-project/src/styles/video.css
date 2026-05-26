@@ -946,16 +946,19 @@
   /* Controls Panel pinned at bottom on mobile */
   .controls-bar {
     bottom: 20px;
-    padding: 8px 16px;
-    gap: 0.6rem;
-    width: 90%;
+    padding: 6px 12px;
+    gap: 0.4rem;
+    width: 95%;
+    max-width: 420px;
     justify-content: space-around;
     border-radius: 20px;
+    flex-wrap: nowrap !important;
   }
 
   .control-btn {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0 !important;
   }
 
   /* Hide Tooltips on Mobile touch screens */
