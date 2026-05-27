@@ -177,6 +177,7 @@ export default function VideoMeet() {
     const [video, setVideo] = useState(true);
     const [audio, setAudio] = useState(true);
     const [screen, setScreen] = useState(false);
+    const [screenShareSupported, setScreenShareSupported] = useState(false);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [askForUsername, setAskForUsername] = useState(true);
@@ -362,7 +363,15 @@ export default function VideoMeet() {
                 console.warn("navigator.mediaDevices is not supported (likely insecure HTTP context)");
                 setVideoAvailable(false);
                 setAudioAvailable(false);
+                setScreenShareSupported(false);
                 return;
+            }
+
+            // Check if screen sharing is supported
+            if (navigator.mediaDevices.getDisplayMedia) {
+                setScreenShareSupported(true);
+            } else {
+                setScreenShareSupported(false);
             }
 
             try {
@@ -1080,10 +1089,12 @@ export default function VideoMeet() {
                             <span className="tooltip">Switch Camera</span>
                         </button>
                         
-                        <button onClick={handleScreenShareToggle} className={`control-btn ${screen ? "btn-active" : "btn-on"}`}>
-                            {screen ? <MonitorOff size={20} /> : <Monitor size={20} />}
-                            <span className="tooltip">{screen ? "Stop Presenting" : "Present Screen"}</span>
-                        </button>
+                        {screenShareSupported && (
+                            <button onClick={handleScreenShareToggle} className={`control-btn ${screen ? "btn-active" : "btn-on"}`}>
+                                {screen ? <MonitorOff size={20} /> : <Monitor size={20} />}
+                                <span className="tooltip">{screen ? "Stop Presenting" : "Present Screen"}</span>
+                            </button>
+                        )}
 
                         <button onClick={handleCopyLink} className="control-btn btn-on">
                             {copied ? <Check size={20} color="#86efac" /> : <Copy size={20} />}
