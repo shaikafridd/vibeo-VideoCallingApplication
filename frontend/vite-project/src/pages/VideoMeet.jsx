@@ -332,8 +332,10 @@ export default function VideoMeet() {
     };
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+        if (showChat) {
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messages, showChat]);
 
     // Attach local stream once the username modal is dismissed and local video element mounts
     useEffect(() => {
